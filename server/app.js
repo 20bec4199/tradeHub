@@ -16,7 +16,7 @@ app.use(cors({
     method: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
-app.use(xss());
+// app.use(xss());
 app.use(hpp());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -29,6 +29,16 @@ app.get('/test', (req, res) => {
     } catch (error) {
         console.log(error);
     }
-})
+});
+
+// Routes
+const authRoutes = require('./routes/auth/authRoutes');
+
+
+app.use('/api/auth', authRoutes);
+
+// Middleware
+const errorMiddleware = require('./middleware/error');
+app.use(errorMiddleware);
 
 module.exports = app;
